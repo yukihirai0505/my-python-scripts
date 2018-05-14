@@ -33,7 +33,7 @@ def lookup_user(ids):
 screen_name = 'yabaiwebyasan'
 friends_ids = get_friend_ids(screen_name)
 friend_100_ids_set = more_itertools.chunked(friends_ids, 100)
-friends_file = open(screen_name + '_after.txt', 'w')
+friends_file = open(screen_name + '_friends.txt', 'w')
 for friends_100_ids in friend_100_ids_set:
     users = lookup_user(friends_100_ids)
     for user in users:
