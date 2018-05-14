@@ -1,3 +1,4 @@
 requests==2.18.4
 requests_oauthlib==0.8.0
 more_itertools==4.1.0
+ccxt==1.13.142
