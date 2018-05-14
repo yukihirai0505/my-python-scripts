@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import json, config, more_itertools
 from requests_oauthlib import OAuth1Session
 
