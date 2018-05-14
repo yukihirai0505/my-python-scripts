@@ -1,2 +1,2 @@
-requests
-requests_oauthlib
+requests==-2.18.4
+requests_oauthlib==0.8.0
