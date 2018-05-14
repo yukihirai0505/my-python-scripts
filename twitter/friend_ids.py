@@ -8,12 +8,23 @@ ATS = config.ACCESS_TOKEN_SECRET
 twitter = OAuth1Session(CK, CS, AT, ATS)
 
 
-def get_friend_ids(_screen_name):
+def get_friend_ids(_screen_name, _next_cursor=-1, _ids=None):
+    if _ids is None:
+        _ids = []
     url = "https://api.twitter.com/1.1/friends/ids.json"
-    params = {'screen_name': _screen_name}
+    params = {
+        'screen_name': _screen_name,
+        'cursor': _next_cursor
+    }
     req = twitter.get(url, params=params)
     if req.status_code == 200:
-        return json.loads(req.text)['ids']
+        response = json.loads(req.text)
+        next_cursor = response['next_cursor']
+        _ids.extend(response['ids'])
+        if next_cursor:
+            return get_friend_ids(_screen_name, next_cursor, _ids)
+        else:
+            return _ids
     else:
         print("ERROR: %d" % req.status_code)
         return []
