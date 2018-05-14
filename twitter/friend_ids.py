@@ -1,4 +1,7 @@
-import json, config, more_itertools
+import config
+import json
+import more_itertools
+
 from requests_oauthlib import OAuth1Session
 
 CK = config.CONSUMER_KEY

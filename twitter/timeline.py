@@ -1,5 +1,6 @@
-# -*- coding:utf-8 -*-
-import json, config
+import config
+import json
+
 from requests_oauthlib import OAuth1Session
 
 CK = config.CONSUMER_KEY
