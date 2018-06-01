@@ -23,7 +23,7 @@ def get_twitter_response(url, params):
 def get_friend_ids(_screen_name, _next_cursor=-1, _ids=None):
     if _ids is None:
         _ids = []
-    url = "https://api.twitter.com/1.1/friends/ids.json"
+    url = 'https://api.twitter.com/1.1/friends/ids.json'
     params = {
         'screen_name': _screen_name,
         'cursor': _next_cursor
@@ -38,7 +38,7 @@ def get_friend_ids(_screen_name, _next_cursor=-1, _ids=None):
 
 
 def lookup_user(ids):
-    url = "https://api.twitter.com/1.1/users/lookup.json"
+    url = 'https://api.twitter.com/1.1/users/lookup.json'
     params = {'user_id': ids}
     return get_twitter_response(url, params)
 
@@ -54,7 +54,7 @@ def timeline(count):
 def search_tweet(query, tweet_id, _max_id=-1, _screen_names=None):
     if _screen_names is None:
         _screen_names = []
-    url = "https://api.twitter.com/1.1/search/tweets.json"
+    url = 'https://api.twitter.com/1.1/search/tweets.json'
     params = {
         'q': query,
         'since_id': tweet_id,
@@ -71,8 +71,25 @@ def search_tweet(query, tweet_id, _max_id=-1, _screen_names=None):
 
 
 def get_tweet_info(tweet_id):
-    url = "https://api.twitter.com/1.1/statuses/show.json"
+    url = 'https://api.twitter.com/1.1/statuses/show.json'
     params = {
         'id': tweet_id
     }
     return get_twitter_response(url, params)
+
+
+def get_retweeters(tweet_id, count, _next_cursor=-1, _ids=None):
+    if _ids is None:
+        _ids = []
+    url = 'https://api.twitter.com/1.1/statuses/retweeters/ids.json'
+    params = {
+        'id': tweet_id,
+        'count': count
+    }
+    response = get_twitter_response(url, params)
+    next_cursor = response['next_cursor']
+    _ids.extend(response['ids'])
+    if next_cursor:
+        return get_retweeters(tweet_id, count, next_cursor, _ids)
+    else:
+        return _ids
