@@ -93,3 +93,12 @@ def get_retweeters(tweet_id, count, _next_cursor=-1, _ids=None):
         return get_retweeters(tweet_id, count, next_cursor, _ids)
     else:
         return _ids
+
+
+def get_friendships_show(source_screen_name, target_screen_name):
+    url = 'https://api.twitter.com/1.1/friendships/show.json'
+    params = {
+        'source_screen_name': source_screen_name,
+        'target_screen_name': target_screen_name
+    }
+    return get_twitter_response(url, params)
