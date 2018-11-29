@@ -37,6 +37,24 @@ def get_friend_ids(_screen_name, _next_cursor=-1, _ids=None):
         return _ids
 
 
+def get_follower_ids(_screen_name, _next_cursor=-1, _ids=None):
+    if _ids is None:
+        _ids = []
+    url = 'https://api.twitter.com/1.1/followers/ids.json'
+    params = {
+        'screen_name': _screen_name,
+        'count': 5000,
+        'cursor': _next_cursor
+    }
+    response = get_twitter_response(url, params)
+    next_cursor = response['next_cursor']
+    _ids.extend(response['ids'])
+    if next_cursor:
+        return get_follower_ids(_screen_name, next_cursor, _ids)
+    else:
+        return _ids
+
+
 def lookup_user(ids):
     url = 'https://api.twitter.com/1.1/users/lookup.json'
     params = {'user_id': ids}
